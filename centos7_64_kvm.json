@@ -29,8 +29,6 @@
 				["-m", "1024M" ],
 				["--cpu", "Opteron_G5"],
 				[ "-nographic", "" ],
-				["-netdev","user,id=br0,"],
-				[ "-device", "virtio-net,netdev=br0" ],
 				["--no-acpi", "" ]
 			]
 		}
