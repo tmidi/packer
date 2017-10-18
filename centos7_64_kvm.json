@@ -2,7 +2,9 @@
 	"variables": {
 		"file_location": "/home/tal/Downloads/CentOS-7-x86_64-Minimal-1708.iso",
 		"file_checksum": "5848f2fd31c7acf3811ad88eaca6f4aa",
-		"checksum_type": "md5"
+		"checksum_type": "md5",
+		"user": "vagrant",
+		"password": "vagrant"
 	},
 	"builders": [
 		{
@@ -15,20 +17,24 @@
 			"disk_size": "12288",
 			"headless": "false",
 			"boot_wait": "5s",
-			"boot_command": ["<tab> text ks=http://192.168.1.86/anaconda-ks.cfg<enter><wait>"],
+			"boot_command": [
+				"<esc>",
+				"<wait>",
+				"linux inst.ks=http://192.168.1.86/anaconda-ks.cfg biosdevname=0 net.ifnames=0",
+				"<enter>"],
 			"ssh_timeout": "10m",
-			"ssh_username": "vagrant",
-			"ssh_password": "vagrant",
+			"ssh_username": "{{user `user`}}",
+			"ssh_password": "{{user `password`}}",
 			"ssh_port": 22,
 			"shutdown_command": "sudo systemctl poweroff",
 			"accelerator": "kvm",
 			"net_device": "virtio-net",
 			"disk_interface": "virtio",
 			"format": "qcow2",
+			"disk_compression": false,
 			"qemuargs": [
 				["-m", "1024M" ],
 				["--cpu", "Opteron_G5"],
-				[ "-nographic", "" ],
 				["--no-acpi", "" ]
 			]
 		}
