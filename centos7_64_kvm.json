@@ -1,0 +1,38 @@
+{
+	"variables": {
+		"file_location": "/home/tal/Downloads/CentOS-7-x86_64-Minimal-1708.iso",
+		"file_checksum": "5848f2fd31c7acf3811ad88eaca6f4aa",
+		"checksum_type": "md5"
+	},
+	"builders": [
+		{
+			"type": "qemu",
+			"iso_url": "{{user `file_location`}}",
+			"iso_checksum": "{{user `file_checksum`}}",
+			"iso_checksum_type": "{{user `checksum_type`}}",
+			"output_directory": "centos-7.3-x86_64-templates-KVM-{{isotime \"2006-01-02-23-56\"}}",
+			"vm_name": "packer-centos-KVM-7.3-x86_64",
+			"disk_size": "12288",
+			"headless": "false",
+			"boot_wait": "5s",
+			"boot_command": ["<tab> text ks=http://192.168.1.86/anaconda-ks.cfg<enter><wait>"],
+			"ssh_timeout": "10m",
+			"ssh_username": "vagrant",
+			"ssh_password": "vagrant",
+			"ssh_port": 22,
+			"shutdown_command": "sudo systemctl poweroff",
+			"accelerator": "kvm",
+			"net_device": "virtio-net",
+			"disk_interface": "virtio",
+			"format": "qcow2",
+			"qemuargs": [
+				["-m", "1024M" ],
+				["--cpu", "Opteron_G5"],
+				[ "-nographic", "" ],
+				["-netdev","user,id=br0,"],
+				[ "-device", "virtio-net,netdev=br0" ],
+				["--no-acpi", "" ]
+			]
+		}
+	]
+}
